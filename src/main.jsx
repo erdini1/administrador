@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './components/Layout'
-import NuevoCliente from './pages/NuevoCliente'
+import NuevoCliente, { action as nuevoClienteAction } from './pages/NuevoCliente'
 //debo ponerle otro nombre al loader porque a meddida que creza la app voy a tener varios que van a chocar
-import Index, {loader as clientesLoader} from "./pages/Index"
+import Index, { loader as clientesLoader } from "./pages/Index"
 
 
 
@@ -19,12 +19,13 @@ const router = createBrowserRouter([
     children: [
       { //esto es para que el path "/" exista
         index: true,
-        element: <Index/>,
+        element: <Index />,
         loader: clientesLoader
       },
       {
         path: "/clientes/nuevo",
-        element: <NuevoCliente />
+        element: <NuevoCliente />,
+        action: nuevoClienteAction
       }
     ]
   },
