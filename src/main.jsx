@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './components/Layout'
 import NuevoCliente from './pages/NuevoCliente'
 //debo ponerle otro nombre al loader porque a meddida que creza la app voy a tener varios que van a chocar
-import Index, {loader as clientesLoader, loader} from "./pages/Index"
+import Index, {loader as clientesLoader} from "./pages/Index"
 
 
 
