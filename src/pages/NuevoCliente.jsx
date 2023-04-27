@@ -10,17 +10,16 @@ export async function action({request}) {
   const datos = Object.fromEntries(formData)
 
   const errores = [];
-  //Validación 
+  //Validación del action
   if(Object.values(datos).includes("")){
     errores.push("Todos los campos son obligatorios")
   }
 
+  //Retornar datos si hay errores
   if(Object.keys(errores).length){
     return errores
   }
 
-  //Retornar datos si hay errores
-  console.log(errores)
 
   return {ok: true}
 }
