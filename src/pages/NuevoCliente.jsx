@@ -1,8 +1,14 @@
 import { useNavigate, Form } from "react-router-dom"
 import Formulario from "../components/Formulario"
 
-export function action() {
-  console.log("submit al formulario")
+//debe se asincrona porque puede ser algo que tarde en traer
+export async function action({request}) {
+  //El formdate va como metodo es decir con () por que esta en el prototype 
+  const formData = await request.formData()
+  const datos = Object.fromEntries(formData)
+
+  console.log(datos)
+
   return {ok: true}
 }
 
