@@ -4,7 +4,8 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './components/Layout'
 import NuevoCliente from './pages/NuevoCliente'
-import Index from "./pages/Index"
+//debo ponerle otro nombre al loader porque a meddida que creza la app voy a tener varios que van a chocar
+import Index, {loader as clientesLoader, loader} from "./pages/Index"
 
 
 
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
     children: [
       { //esto es para que el path "/" exista
         index: true,
-        element: <Index/>
+        element: <Index/>,
+        loader: clientesLoader
       },
       {
         path: "/clientes/nuevo",
