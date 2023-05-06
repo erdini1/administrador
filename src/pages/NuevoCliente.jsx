@@ -9,8 +9,8 @@ export async function action({request}) {
   const formData = await request.formData()
   const datos = Object.fromEntries(formData)
 
-  const errores = [];
   //Validación del action
+  const errores = [];
   if(Object.values(datos).includes("")){
     errores.push("Todos los campos son obligatorios")
   }
@@ -29,8 +29,6 @@ const NuevoCliente = () => {
   const errores = useActionData()
   const navigate = useNavigate()
 
-
-  console.log(errores)
   return (
     <>
       <h1 className='font-black text-4xl text-blue-900'>Nuevo cliente</h1>
