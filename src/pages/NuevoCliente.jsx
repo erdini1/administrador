@@ -9,6 +9,8 @@ export async function action({request}) {
   const formData = await request.formData()
   const datos = Object.fromEntries(formData)
 
+  
+
   //Validación del action
   const errores = [];
   if(Object.values(datos).includes("")){
