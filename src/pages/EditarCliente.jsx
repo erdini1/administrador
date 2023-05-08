@@ -1,6 +1,7 @@
-import { Form, useNavigate, useLoaderData } from "react-router-dom"
-import { obtenerCliente } from "../data/clientes"
+import { Form, useNavigate, useLoaderData, useActionData, redirect } from "react-router-dom"
+import { obtenerCliente, actualizarCliente } from "../data/clientes"
 import Formulario from "../components/Formulario"
+import Error from "../components/Error"
 
 
 export async function loader({ params }) {
@@ -16,11 +17,38 @@ export async function loader({ params }) {
     return cliente
 }
 
+export async function action({request, params}){
+    const formData = await request.formData()
+    const datos = Object.fromEntries(formData)
+    const email = formData.get("email")
+  
+    const errores = [];
+    if(Object.values(datos).includes("")){
+      errores.push("Todos los campos son obligatorios")
+    }
+  
+    let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+  
+    if(!regex.test(email)){
+      errores.push("El Email no es valido")
+    }
+    
+    //Retornar datos si hay errores
+    if(Object.keys(errores).length){
+      return errores
+    }
+  
+    //Actualizar el cliente
+    await actualizarCliente(params.clienteId, datos)
+    return redirect("/")
+}
+
+
 function EditarCliente() {
 
     const navigate = useNavigate()
-    const cliente = useLoaderData()
-    
+    const cliente = useLoaderData() //Nos permite recuperar el loader
+    const errores = useActionData() //nos permite recuperar el action
 
     return (
         <>
@@ -38,7 +66,7 @@ function EditarCliente() {
 
             <div className="bg-white shadow rounded-md md:w-3/4 mx-auto px-5 py-10 mt-20">
 
-                {/* {errores?.length && errores.map((error, i) => <Error key={i}>{error}</Error>)} */}
+                {errores?.length && errores.map((error, i) => <Error key={i}>{error}</Error>)}
 
                 <Form
                     method="post"
@@ -51,7 +79,7 @@ function EditarCliente() {
                     <input
                         type="submit"
                         className="mt-5 w-full bg-blue-800 p-3 uppercase font-bold text-white text-lg"
-                        value="Registrar Cliente"
+                        value="Guardar Cambios"
                     />
                 </Form>
             </div >
