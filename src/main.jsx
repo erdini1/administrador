@@ -4,10 +4,11 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './components/Layout'
 import ErrorPage from './components/ErrorPage'
-import EditarCliente, {loader as editarClienteLoader, action as editarClienteAction} from './pages/EditarCliente'
+import EditarCliente, { loader as editarClienteLoader, action as editarClienteAction } from './pages/EditarCliente'
 import NuevoCliente, { action as nuevoClienteAction } from './pages/NuevoCliente'
 //debo ponerle otro nombre al loader porque a meddida que creza la app voy a tener varios que van a chocar
 import Index, { loader as clientesLoader } from "./pages/Index"
+import { action as eliminarClienteAction } from "./components/Cliente"
 
 
 
@@ -24,20 +25,24 @@ const router = createBrowserRouter([
         element: <Index />,
         loader: clientesLoader,
         // de esta forma creo una pantalla personalizada
-        errorElement: <ErrorPage/>
+        errorElement: <ErrorPage />
       },
       {
         path: "/clientes/nuevo",
         element: <NuevoCliente />,
         action: nuevoClienteAction,
-        errorElement: <ErrorPage/>
+        errorElement: <ErrorPage />
       },
       {
         path: "/clientes/:clienteId/editar",
-        element: <EditarCliente/>,
+        element: <EditarCliente />,
         loader: editarClienteLoader,
         action: editarClienteAction,
-        errorElement: <ErrorPage/>
+        errorElement: <ErrorPage />
+      },
+      {
+        path: "/clientes/:clienteId/eliminar",
+        action: eliminarClienteAction
       }
     ]
   },
